@@ -1,0 +1,130 @@
+# Restaurant Ordering System - Using Classes and Object-Oriented Programming
+
+# Dish class to define each food item on the menu
+class Dish:
+    def __init__(self, name, price, category):
+        self.name = name              # Name of the dish (e.g., Spaghetti)
+        self.price = price            # Price of the dish
+        self.category = category      # Category (e.g., Starter, Main Course, Dessert)
+
+    def __str__(self):
+        # Returns a string representation of the dish when printed
+        return f"{self.name} ({self.category}) - £{self.price:.2f}"
+
+
+# Order class to manage customer orders
+class Order:
+    last_order_id = 0  # Class variable to generate unique order IDs
+
+    def __init__(self, customer, status="Pending"):
+        Order.last_order_id += 1               # Increment order ID each time a new order is created
+        self.order_id = Order.last_order_id    # Assign a unique ID to the order
+        self.customer = customer               # Customer object who placed the order
+        self.ordered_dishes = []               # List to store dishes added to the order
+        self.status = status                   # Order status (default is "Pending")
+
+    def add_dish(self, dish):
+        self.ordered_dishes.append(dish)       # Add a dish to the order list
+
+    def calculate_total(self):
+        return sum(dish.price for dish in self.ordered_dishes)  # Add up prices of all dishes
+
+    def view_order(self):
+        # Print out details of the order
+        print(f"Order ID: {self.order_id}")
+        print(f"Customer: {self.customer.name}")
+        print("Ordered Dishes:")
+        for dish in self.ordered_dishes:
+            print(f"  - {dish}")
+        print(f"Status: {self.status}")
+        print(f"Total: £{self.calculate_total():.2f}\n")
+
+
+# Customer class to manage customer details
+class Customer:
+    def __init__(self, name, email):
+        self.name = name                # Customer's name
+        self.email = email              # Customer's email
+        self.order_history = []         # Stores previous orders (not used fully here)
+
+    def place_order(self, order):
+        self.order_history.append(order)  # Add order to customer's history
+
+
+# Restaurant class to manage menu and orders
+class Restaurant:
+    def __init__(self):
+        self.menu = []     # List of all available dishes
+        self.orders = []   # List of all placed orders
+
+    def add_dish_to_menu(self, dish):
+        self.menu.append(dish)   # Add a dish to the menu
+
+    def place_order(self, order):
+        self.orders.append(order)  # Add an order to the restaurant's list
+
+    def view_menu(self):
+        print("----- Restaurant Menu -----")
+        for dish in self.menu:
+            print(dish)  # Calls __str__ method of Dish
+        print("---------------------------\n")
+
+    def view_orders(self):
+        print("===== All Orders =====")
+        for order in self.orders:
+            order.view_order()  # Print each order
+        print("======================\n")
+
+
+# Main program logic
+if __name__ == "__main__":
+
+    # Create a restaurant instance
+    my_restaurant = Restaurant()
+
+    # Create some dishes and add them to the restaurant's menu
+    dish1 = Dish("Spaghetti Bolognese", 12.99, "Main Course")
+    dish2 = Dish("Tiramisu", 6.50, "Dessert")
+    dish3 = Dish("Caesar Salad", 8.99, "Starter")
+
+    my_restaurant.add_dish_to_menu(dish1)
+    my_restaurant.add_dish_to_menu(dish2)
+    my_restaurant.add_dish_to_menu(dish3)
+
+    # Create a customer
+    customer = Customer("Alice", "alice@example.com")
+
+    # View the menu (prints all dishes)
+    my_restaurant.view_menu()
+
+    # View orders before placing any (will show nothing yet)
+    my_restaurant.view_orders()
+
+    # Restarting a new restaurant instance (could be removed for simplicity)
+    my_restaurant = Restaurant()
+
+    # Create new dishes and add them to a fresh menu
+    dish1 = Dish("Spaghetti Carbonara", 15.99, "Main Course")
+    dish2 = Dish("Panacoutta", 6.50, "Dessert")
+    dish3 = Dish("Mozzarella De Buffalla", 8.99, "Starter")
+
+    my_restaurant.add_dish_to_menu(dish1)
+    my_restaurant.add_dish_to_menu(dish2)
+    my_restaurant.add_dish_to_menu(dish3)
+
+    # Create another customer
+    customer = Customer("Claudia", "Claudia@ef.com")
+
+    # View the new menu
+    my_restaurant.view_menu()
+
+    # Create an order for Claudia and add dishes to it
+    order1 = Order(customer)
+    order1.add_dish(dish1)
+    order1.add_dish(dish2)
+
+    # Add the order to the restaurant system
+    my_restaurant.place_order(order1)
+
+    # View all current orders (should show Claudia’s order)
+    my_restaurant.view_orders()
