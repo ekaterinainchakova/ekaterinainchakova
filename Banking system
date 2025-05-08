@@ -1,0 +1,99 @@
+# Importing the pandas library to work with structured data
+import pandas as pd
+
+# Creating a dictionary containing movie data
+# Each key represents a column, and each value is a list of entries for that column
+data = {
+    "Movie Name": [
+        "Avengers: Endgame", "The Godfather", "Titanic",
+        "Inception", "The Dark Knight", "Frozen II",
+        "Pulp Fiction", "Avatar", "Joker", "Parasite"
+    ],
+    "Director": [
+        "Anthony Russo", "Francis Ford Coppola", "James Cameron",
+        "Christopher Nolan", "Christopher Nolan", "Chris Buck",
+        "Quentin Tarantino", "James Cameron", "Todd Phillips", "Bong Joon-ho"
+    ],
+    "Release Year": [2019, 1972, 1997, 2010, 2008, 2019, 1994, 2009, 2019, 2019],
+    "Genre": [
+        "Action", "Crime", "Romance", "Sci-Fi", "Action",
+        "Animation", "Crime", "Sci-Fi", "Drama", "Thriller"
+    ],
+    "Rating": [8.4, 9.2, 7.9, 8.8, 9.0, 6.8, 8.9, 7.9, 8.4, 8.6],
+    "Budget": [356, 6, 200, 160, 185, 150, 8, 237, 70, 11],  # in millions
+    "Box Office Revenue": [2798, 246, 2200, 836, 1005, 1450, 213, 2923, 1074, 258]  # in millions
+}
+
+# Converting the dictionary into a Pandas DataFrame (table-like structure)
+df = pd.DataFrame(data)
+
+# Displaying the first few rows of the dataset for preview
+print("First few rows:")
+print(df.head(), "\n")
+
+# Displaying information about the dataset (columns, types, memory usage, etc.)
+print("Dataset info:")
+print(df.info(), "\n")
+
+# Showing statistical summary for numerical columns (Rating, Budget, Revenue)
+print("Summary statistics:")
+print(df[["Rating", "Budget", "Box Office Revenue"]].describe(), "\n")
+
+# Filtering and showing only movies with a rating above 8.0
+print("Movies with rating > 8.0:")
+print(df[df["Rating"] > 8.0], "\n")
+
+# Filtering and showing movies that earned over $500 million in box office revenue
+print("Movies with box office > $500M:")
+print(df[df["Box Office Revenue"] > 500], "\n")
+
+# Sorting the dataset by Release Year in descending order (most recent first)
+print("Movies sorted by release year (descending):")
+print(df.sort_values(by="Release Year", ascending=False), "\n")
+
+# Sorting the dataset by Box Office Revenue from highest to lowest
+print("Movies sorted by box office revenue (descending):")
+print(df.sort_values(by="Box Office Revenue", ascending=False), "\n")
+
+# Calculating the average rating across all movies
+avg_rating = df["Rating"].mean()
+# Calculating the total budget of all movies combined
+total_budget = df["Budget"].sum()
+# Finding the movie name with the highest revenue
+highest_grossing = df[df["Box Office Revenue"] == df["Box Office Revenue"].max()]["Movie Name"].values[0]
+
+# Displaying calculated statistics
+print(f"Average rating: {avg_rating:.2f}")
+print(f"Total combined budget: ${total_budget}M")
+print(f"Highest grossing movie: {highest_grossing}\n")
+
+# Calculating the average rating for each genre using groupby()
+print("Average rating by genre:")
+print(df.groupby("Genre")["Rating"].mean(), "\n")
+
+# Calculating total box office revenue for each director using groupby()
+print("Total box office revenue by director:")
+print(df.groupby("Director")["Box Office Revenue"].sum(), "\n")
+
+# Creating a new column "Profit" = Revenue - Budget
+df["Profit"] = df["Box Office Revenue"] - df["Budget"]
+
+# Showing movie names along with calculated profit
+print("Dataset with Profit column:")
+print(df[["Movie Name", "Profit"]], "\n")
+
+# Finding the row (movie) with the highest profit
+highest_profit_movie = df.loc[df["Profit"].idxmax()]
+
+# Displaying which movie had the highest profit and how much it made
+print(f"Movie with highest profit: {highest_profit_movie['Movie Name']} (${highest_profit_movie['Profit']}M)\n")
+
+# Writing a short reflection based on insights from the data
+print("Reflection:")
+print("""From this real-movie dataset:
+- Christopher Nolan’s movies are popular and highly rated.
+- James Cameron directed two top-earning films: Avatar and Titanic.
+- The Godfather and Pulp Fiction had great ratings with small budgets.
+- Action and animated movies made the most money.
+- Adding more movies from different years or countries could show more trends.
+""")
