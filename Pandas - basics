@@ -1,0 +1,93 @@
+# Importing pandas library for data handling
+import pandas as pd
+
+# Step 1: Creating a sample movie dataset using a dictionary
+data = {
+    "Movie Name": ["Inception", "The Lion King", "Avengers", "Joker"],
+    "Director": ["Christopher Nolan", "Jon Favreau", "Anthony Russo", "Todd Phillips"],
+    "Release Year": [2010, 2019, 2012, 2019],
+    "Genre": ["Sci-Fi", "Animation", "Action", "Drama"],
+    "Rating": [8.8, 6.9, 8.0, 8.4],
+    "Budget": [160, 260, 220, 70],  # in millions
+    "Box Office Revenue": [829, 1657, 1519, 1074]  # in millions
+}
+
+# Creating the DataFrame from the dictionary
+df = pd.DataFrame(data)
+
+# Step 2: Basic Exploration
+
+# Display the first few rows to get an overview of the data
+print("First few rows of the dataset:")
+print(df.head(), "\n")  # .head() shows the first 5 rows of the dataset
+
+# Display info about the dataset (column names, types, non-null counts)
+print("Dataset info:")
+print(df.info(), "\n")  # .info() gives data types and non-null counts for each column
+
+# Display summary statistics for numerical columns (e.g., Rating, Budget, Revenue)
+print("Summary statistics:")
+print(df[["Rating", "Budget", "Box Office Revenue"]].describe(), "\n")  # .describe() provides summary stats
+
+# Step 3: Filtering
+
+# Filter movies with rating greater than 8.0
+print("Movies with rating > 8.0:")
+print(df[df["Rating"] > 8.0], "\n")  # Filter based on Rating column
+
+# Filter movies with box office revenue greater than $500 million
+print("Movies with box office revenue > $500M:")
+print(df[df["Box Office Revenue"] > 500], "\n")  # Filter based on Box Office Revenue
+
+# Step 4: Sorting
+
+# Sort movies by release year (most recent first)
+print("Movies sorted by release year (newest to oldest):")
+print(df.sort_values(by="Release Year", ascending=False), "\n")  # Sorting by Release Year
+
+# Sort movies by box office revenue (highest first)
+print("Movies sorted by box office revenue (highest to lowest):")
+print(df.sort_values(by="Box Office Revenue", ascending=False), "\n")  # Sorting by Box Office Revenue
+
+# Step 5: Aggregation
+
+# Calculate the average rating of all movies
+avg_rating = df["Rating"].mean()
+print(f"Average movie rating: {avg_rating:.2f}")  # .mean() calculates the average value
+
+# Calculate the total combined budget of all movies
+total_budget = df["Budget"].sum()
+print(f"Total combined budget: ${total_budget} million")  # .sum() calculates the total value
+
+# Find the highest grossing movie (the movie with the highest box office revenue)
+highest_grossing = df[df["Box Office Revenue"] == df["Box Office Revenue"].max()]["Movie Name"].values[0]
+print(f"Highest grossing movie: {highest_grossing}\n")  # Find the movie with the max revenue
+
+# Step 6: Grouping
+
+# Group by Genre and calculate the average rating for each genre
+print("Average rating by genre:")
+print(df.groupby("Genre")["Rating"].mean(), "\n")  # .groupby() groups by Genre and calculates mean of Rating
+
+# Group by Director and calculate total box office revenue per director
+print("Total box office revenue by director:")
+print(df.groupby("Director")["Box Office Revenue"].sum(), "\n")  # .groupby() groups by Director and sums Box Office Revenue
+
+# Step 7: Extra Challenge - Calculate Profit
+
+# Create a new column 'Profit' by subtracting Budget from Box Office Revenue
+df["Profit"] = df["Box Office Revenue"] - df["Budget"]
+print("Profit for each movie:")
+print(df[["Movie Name", "Profit"]], "\n")  # Show Movie Name and its Profit
+
+# Identify the most profitable movie (highest profit)
+highest_profit = df.loc[df["Profit"].idxmax()]  # .idxmax() gets the index of the max profit
+print(f"Most profitable movie: {highest_profit['Movie Name']} (${highest_profit['Profit']} million profit)\n")
+
+# Step 8: Reflection
+print("Reflection:")
+print("""
+Animation films like The Lion King have always done well at the box office, attracting great crowds with their interesting stories and visual appeal.
+Films like Joker and Inception also received great reviews despite their various genres, therefore demonstrating that good stories and interesting actors can cross genre limits.
+Expanding the dataset to include a wider range of genres and films from other countries would help to improve the analysis and provide a more complete picture of global box office trends and audience preferences.
+""")
