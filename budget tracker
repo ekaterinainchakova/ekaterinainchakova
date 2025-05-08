@@ -1,0 +1,146 @@
+# Personal Budget Tracker (Simplified Version)
+
+# We use lists to store income and expenses as dictionaries
+incomes = []   # Example: {"description": "Salary", "amount": 1000}
+expenses = []  # Example: {"description": "Groceries", "amount": 200, "category": "Food"}
+
+# Function to add an income entry
+def add_income():
+    # Ask the user for income details
+    description = input("Enter income description: ")
+    try:
+        amount = float(input("Enter income amount: "))  # Convert input to number
+        incomes.append({"description": description, "amount": amount})  # Save to incomes list
+        print("Income added!\n")
+    except ValueError:
+        print("Invalid amount. Please enter a number.\n")
+
+# Function to add an expense entry
+def add_expense():
+    # Ask the user for expense details
+    description = input("Enter expense description: ")
+    try:
+        amount = float(input("Enter expense amount: "))  # Convert input to number
+        category = input("Enter expense category: ")
+        expenses.append({"description": description, "amount": amount, "category": category})  # Save to expenses list
+        print("Expense added!\n")
+    except ValueError:
+        print("Invalid amount. Please enter a number.\n")
+
+# Function to view a summary of the budget
+def view_summary():
+    # Calculate totals by adding amounts
+    total_income = sum(entry["amount"] for entry in incomes)
+    total_expense = sum(entry["amount"] for entry in expenses)
+    balance = total_income - total_expense  # Money left after expenses
+
+    print("\n--- Budget Summary ---")
+    print(f"Total Income: £{total_income:.2f}")
+    print(f"Total Expenses: £{total_expense:.2f}")
+    print(f"Balance: £{balance:.2f}\n")
+
+# Function to delete an entry by its description
+def delete_entry():
+    entry_type = input("Delete income or expense? ").lower()
+    description = input("Enter the description of the entry to delete: ")
+
+    # Choose the correct list based on user input
+    if entry_type == "income":
+        for entry in incomes:
+            if entry["description"].lower() == description.lower():
+                incomes.remove(entry)
+                print("Income entry deleted!\n")
+                return
+    elif entry_type == "expense":
+        for entry in expenses:
+            if entry["description"].lower() == description.lower():
+                expenses.remove(entry)
+                print("Expense entry deleted!\n")
+                return
+
+    print("Entry not found.\n")
+
+# Function to change details of an existing entry
+def modify_entry():
+    entry_type = input("Modify income or expense? ").lower()
+    description = input("Enter the description of the entry to modify: ")
+
+    if entry_type == "income":
+        for entry in incomes:
+            if entry["description"].lower() == description.lower():
+                entry["description"] = input("New description: ")
+                try:
+                    entry["amount"] = float(input("New amount: "))
+                    print("Income entry updated!\n")
+                except ValueError:
+                    print("Invalid amount.\n")
+                return
+    elif entry_type == "expense":
+        for entry in expenses:
+            if entry["description"].lower() == description.lower():
+                entry["description"] = input("New description: ")
+                try:
+                    entry["amount"] = float(input("New amount: "))
+                    entry["category"] = input("New category: ")
+                    print("Expense entry updated!\n")
+                except ValueError:
+                    print("Invalid amount.\n")
+                return
+
+    print("Entry not found.\n")
+
+# Function to list all income and expense entries
+def list_entries():
+    print("\n--- Income Entries ---")
+    if incomes:
+        for entry in incomes:
+            print(f"{entry['description']}: £{entry['amount']:.2f}")
+    else:
+        print("No income entries found.")
+
+    print("\n--- Expense Entries ---")
+    if expenses:
+        for entry in expenses:
+            print(f"{entry['description']}: £{entry['amount']:.2f} (Category: {entry['category']})")
+    else:
+        print("No expense entries found.")
+
+    print()
+
+# Main function with a loop to show the menu
+def main():
+    while True:
+        # Show menu options to the user
+        print("----- Personal Budget Tracker -----")
+        print("1. Add Income")
+        print("2. Add Expense")
+        print("3. View Budget Summary")
+        print("4. Delete Entry")
+        print("5. Modify Entry")
+        print("6. List All Entries")
+        print("7. Exit")
+
+        choice = input("Choose an option (1-7): ")
+
+        # Run the matching function based on user's choice
+        if choice == "1":
+            add_income()
+        elif choice == "2":
+            add_expense()
+        elif choice == "3":
+            view_summary()
+        elif choice == "4":
+            delete_entry()
+        elif choice == "5":
+            modify_entry()
+        elif choice == "6":
+            list_entries()
+        elif choice == "7":
+            print("Thank you for using the budget tracker. Goodbye!")
+            break  # Exit the loop to end the program
+        else:
+            print("Invalid option. Please enter a number from 1 to 7.\n")
+
+# This tells Python to run the main() function when the program starts
+if __name__ == "__main__":
+    main()
