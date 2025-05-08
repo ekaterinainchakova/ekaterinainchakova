@@ -1,0 +1,112 @@
+# Task 1: Assigning Values to Variables
+num = 5             # Integer
+price = 2.5         # Float
+name = "Claudia"      # String
+print(num, price, name)
+
+# Task 2: Data Types
+age = 18
+print(type(age))    # Show the data type of 'age'
+
+age = float(age)    # Change to float
+print(type(age))
+
+is_student = True
+print(type(is_student))  # Boolean type
+
+# Task 3: Basic Input and Output
+your_name = input("What is your name? ")
+print("Hello,", your_name + "!")
+
+age = int(input("How old are you? "))
+if age >= 18:
+    print("You are eligible to vote.")
+else:
+    print("You are not eligible to vote.")
+
+# Task 4: Converting Data Types
+number = input("Enter a number: ")
+number = int(number)
+print("Squared value:", number * number)
+
+float_text = "4.56"
+result = float(float_text) * 2
+print("4.56 times 2 is:", result)
+
+# Task 5: Arithmetic Operators
+print("45 + 67 =", 45 + 67)
+print("156 - 89 =", 156 - 89)
+print("12 * 7 =", 12 * 7)
+print("100 / 4 =", 100 / 4)
+print("10 % 3 =", 10 % 3)
+print("3 ** 4 =", 3 ** 4)  # 3 to the power of 4
+
+# Task 6: Comparison Operators
+a = 10
+b = 20
+print("a == b:", a == b)
+print("a != b:", a != b)
+print("a < b:", a < b)
+print("a > b:", a > b)
+print("a <= b:", a <= b)
+print("a >= b:", a >= b)
+
+# Comparing two user input numbers
+x = int(input("Enter first number: "))
+y = int(input("Enter second number: "))
+if x >= y:
+    print("First number is greater than or equal to second.")
+else:
+    print("First number is less than second.")
+
+# Task 7: Logical Operators
+num = int(input("Enter a number between 10 and 20: "))
+if num > 10 and num < 20:
+    print("Number is in the range.")
+else:
+    print("Number is not in the range.")
+
+num = int(input("Enter a number: "))
+if num < 5 or num > 50:
+    print("Number is less than 5 or greater than 50.")
+else:
+    print("Number is between 5 and 50.")
+
+# Task 8: Conditional Statements
+age = int(input("Enter your age: "))
+if age >= 18:
+    print("You are an adult.")
+else:
+    print("You are a minor.")
+
+num = int(input("Enter a number: "))
+if num % 3 == 0 and num % 5 == 0:
+    print("FizzBuzz")
+elif num % 3 == 0:
+    print("Fizz")
+elif num % 5 == 0:
+    print("Buzz")
+else:
+    print(num)
+
+# Task 9: Loops
+print("Numbers from 1 to 10:")
+for i in range(1, 11):
+    print(i)
+
+print("Even numbers from 2 to 20:")
+i = 2
+while i <= 20:
+    print(i)
+    i += 2
+
+n = int(input("Enter a number: "))
+print("Numbers from 1 to", n, "that are divisible by 4:")
+for i in range(1, n + 1):
+    if i % 4 == 0:
+        print(i)
+
+#Nested Loops - Print triangle pattern
+print("Triangle pattern:")
+for i in range(1, 6):
+    print("*" * i)
